@@ -1,10 +1,22 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Body from "./components/Body";
+import Browse from "./components/Browse";
+import Login from "./components/Login";
 
 
 function App() {
   return (
     <>
-      <h1 className="text-red-400">asdfa</h1>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/browse" element={<Browse />} />
+
+
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
