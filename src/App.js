@@ -13,8 +13,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/browse" element={<Browse />} />
-
-
         </Routes>
       </BrowserRouter>
     </>

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { checkLoginValidData, checkSignUpValid, checkValidData } from '../utils/validate';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../utils/firebase';
 
 const Login = () => {
 
@@ -16,6 +18,8 @@ const Login = () => {
     const passwordSignup = useRef();
     const confirmPasswordSignup = useRef();
 
+    const [loginError, setloginError] = useState(false)
+    const [signupError, setSignupError] = useState(false)
 
     const [isSignInForm, setIsSignInForm] = useState(true);
     const toggleSignInForm = () => {
@@ -29,7 +33,20 @@ const Login = () => {
         toast.error(message)
         if (!message) {
 
-            toast.success("Login Successful! ")
+
+            signInWithEmailAndPassword(auth, emailLogin.current.value, passwordLogin.current.value)
+                .then((userCredential) => {
+
+                    const user = userCredential.user;
+                    toast.success(`Login Successful! `)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    toast.error(errorCode + "-" + errorMessage)
+                    toast.error(errorCode + "-" + errorMessage)
+
+                });
         }
     }
     const handleSignUp = (e) => {
@@ -39,11 +56,24 @@ const Login = () => {
         toast.error(message)
         if (!message) {
 
-            toast.success("Signup Successful! ")
+            //Create a new User in firebase
+            createUserWithEmailAndPassword(auth, emailSignup.current.value, passwordSignup.current.value)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log("🚀 ~ file: Login.jsx:54 ~ .then ~ user:", user)
+
+                    toast.success("Signup Successful! ")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    toast.error(errorCode + "-" + errorMessage)
+
+                });
+
         }
-
     }
-
 
     return (
         <>
@@ -89,8 +119,6 @@ const Login = () => {
                                 <p className='w-auto py-4 mx-2 text-white cursor-pointer group' onClick={toggleSignInForm}>Already Registered? <span className='group-hover:underline'> Login In Now</span></p>
                             </form>
                         }
-
-
                     </div>
                 </div>
             </div>
@@ -98,4 +126,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login;

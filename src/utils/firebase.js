@@ -1,6 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+
+
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,6 +19,15 @@ const firebaseConfig = {
     measurementId: "G-WWFM4Y687M"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+try {
+
+    const app = initializeApp(firebaseConfig);
+
+
+    // Use Firebase services
+
+} catch (error) {
+    console.error('Firebase initialization error:', error);
+    // Handle the error appropriately, e.g., show a user-friendly message
+}
+export const auth = getAuth();
