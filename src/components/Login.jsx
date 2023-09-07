@@ -4,11 +4,15 @@ import { useState } from 'react'
 import { checkLoginValidData, checkSignUpValid, checkValidData } from '../utils/validate';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
     //Login
     const emailLogin = useRef();
     const passwordLogin = useRef();
@@ -17,6 +21,7 @@ const Login = () => {
     const emailSignup = useRef();
     const passwordSignup = useRef();
     const confirmPasswordSignup = useRef();
+    const nameSignup = useRef();
 
     const [loginError, setloginError] = useState(false)
     const [signupError, setSignupError] = useState(false)
@@ -32,13 +37,12 @@ const Login = () => {
         console.log("🚀 ~ file: Login.jsx:20 ~ handleSignIn ~ message:", message)
         toast.error(message)
         if (!message) {
-
-
             signInWithEmailAndPassword(auth, emailLogin.current.value, passwordLogin.current.value)
                 .then((userCredential) => {
-
                     const user = userCredential.user;
                     toast.success(`Login Successful! `)
+                    navigate("/browse");
+
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -51,7 +55,7 @@ const Login = () => {
     }
     const handleSignUp = (e) => {
         e.preventDefault()
-        const message = checkSignUpValid(emailSignup.current.value, passwordSignup.current.value, confirmPasswordSignup.current.value)
+        const message = checkSignUpValid(nameSignup.current.value, emailSignup.current.value, passwordSignup.current.value, confirmPasswordSignup.current.value)
         console.log("🚀 ~ file: Login.jsx:20 ~ handleSignIn ~ message:", message)
         toast.error(message)
         if (!message) {
@@ -61,15 +65,34 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
+
+                    console.log("🚀 ~ file: Login.jsx:23 ~ Login ~ nameSignup:", nameSignup.current.value)
+                    updateProfile(user, {
+                        displayName: nameSignup.current.value, photoURL: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+                    }).then(() => {
+                        // Profile updated!
+                        const { uid, email, displayName, photoURL } = auth.currentUser;
+
+                        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }))
+
+                        console.log('Working');
+                        navigate("/browse");
+
+                    }).catch((error) => {
+                        // An error occurred
+                        toast.error(`Some problem occured! ${error}`)
+
+                    });
+
                     console.log("🚀 ~ file: Login.jsx:54 ~ .then ~ user:", user)
 
                     toast.success("Signup Successful! ")
+
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     toast.error(errorCode + "-" + errorMessage)
-
                 });
 
         }
@@ -110,6 +133,7 @@ const Login = () => {
                         {!isSignInForm &&
                             <form className='flex flex-col p-12 bg-black rounded-md bg-opacity-80'>
                                 <h1 className='p-2 text-2xl font-bold text-white'>Sign Up</h1>
+                                <input ref={nameSignup} type="text" placeholder='Name' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <input ref={emailSignup} type="text" placeholder='Email Address' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <input ref={passwordSignup} type="password" placeholder='Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <input ref={confirmPasswordSignup} type="password" placeholder='Confirm Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
