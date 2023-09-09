@@ -1,17 +1,43 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { auth } from '../utils/firebase';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
 
 export default function Header() {
 
   const navigate = useNavigate();
   const user = useSelector(store => store.user)
-  const handleSignOut = () => {
 
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("🚀 ~ file: Body.jsx:15 ~ onAuthStateChanged ~ user:", user)
+        //signin case
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }))
+        navigate("/browse");
+      } else {
+        dispatch(removeUser())
+        navigate("/");
+      }
+    });
+
+
+    //unsubscribe will be called when component unmounts.
+    return () => unsubscribe();
+  }, [])
+
+
+
+
+  const handleSignOut = () => {
     signOut(auth).then(() => {
-      navigate("/")
+
     }).catch((error) => {
       // An error happened.
       navigate("/error")
@@ -21,10 +47,7 @@ export default function Header() {
   return (
     <>
       <div className="absolute flex justify-between w-full px-8 py-3 bg-gradient-to-b from-black">
-
         <img src="./assets/netflix.png" alt="Netflix" className="w-60" />
-
-
         {user &&
           <div className="flex items-center gap-3">
 

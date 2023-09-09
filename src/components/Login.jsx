@@ -6,12 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
 const Login = () => {
-    const navigate = useNavigate();
+
     const dispatch = useDispatch()
     //Login
     const emailLogin = useRef();
@@ -22,9 +21,6 @@ const Login = () => {
     const passwordSignup = useRef();
     const confirmPasswordSignup = useRef();
     const nameSignup = useRef();
-
-    const [loginError, setloginError] = useState(false)
-    const [signupError, setSignupError] = useState(false)
 
     const [isSignInForm, setIsSignInForm] = useState(true);
     const toggleSignInForm = () => {
@@ -41,13 +37,12 @@ const Login = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     toast.success(`Login Successful! `)
-                    navigate("/browse");
+
 
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    toast.error(errorCode + "-" + errorMessage)
                     toast.error(errorCode + "-" + errorMessage)
 
                 });
@@ -66,7 +61,6 @@ const Login = () => {
                     // Signed in 
                     const user = userCredential.user;
 
-                    console.log("🚀 ~ file: Login.jsx:23 ~ Login ~ nameSignup:", nameSignup.current.value)
                     updateProfile(user, {
                         displayName: nameSignup.current.value, photoURL: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
                     }).then(() => {
@@ -74,9 +68,6 @@ const Login = () => {
                         const { uid, email, displayName, photoURL } = auth.currentUser;
 
                         dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }))
-
-                        console.log('Working');
-                        navigate("/browse");
 
                     }).catch((error) => {
                         // An error occurred
@@ -94,18 +85,14 @@ const Login = () => {
                     const errorMessage = error.message;
                     toast.error(errorCode + "-" + errorMessage)
                 });
-
         }
     }
-
     return (
         <>
             <div className="">
                 <Header />
                 <div className="relative flex items-center justify-center">
                     <img src="./assets/homebg.jpg" alt="homebg" className='top-0 left-0 -z-10' />
-
-
                     <div className="absolute w-[450px] ">
                         <ToastContainer
                             position='top-right'
@@ -119,7 +106,6 @@ const Login = () => {
                             pauseOnHover
                             theme='light'
                         />
-
                         {isSignInForm &&
                             <form className='flex flex-col p-12 bg-black rounded-md bg-opacity-80'>
                                 <h1 className='p-2 text-2xl font-bold text-white'>Sign In</h1>
@@ -127,8 +113,6 @@ const Login = () => {
                                 <input ref={passwordLogin} type="password" placeholder='Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <button className='p-4 mx-2 my-4 text-white bg-red-600 rounded-md ' onClick={handleSignIn}>Sign In</button>
                                 <p className='w-auto py-4 mx-2 text-white cursor-pointer group' onClick={toggleSignInForm}>New to Netflix? <span className='group-hover:underline'> Sign Up Now</span></p>
-
-
                             </form>}
                         {!isSignInForm &&
                             <form className='flex flex-col p-12 bg-black rounded-md bg-opacity-80'>
@@ -138,8 +122,6 @@ const Login = () => {
                                 <input ref={passwordSignup} type="password" placeholder='Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <input ref={confirmPasswordSignup} type="password" placeholder='Confirm Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <button className='p-4 mx-2 my-4 text-white bg-red-600 rounded-md ' onClick={handleSignUp}>Sign Up</button>
-
-
                                 <p className='w-auto py-4 mx-2 text-white cursor-pointer group' onClick={toggleSignInForm}>Already Registered? <span className='group-hover:underline'> Login In Now</span></p>
                             </form>
                         }

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Body from "./components/Body";
 import Browse from "./components/Browse";
@@ -11,20 +11,7 @@ import { addUser, removeUser } from "./utils/userSlice";
 
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("🚀 ~ file: Body.jsx:15 ~ onAuthStateChanged ~ user:", user)
-        //signin case
-        const { uid, email, displayName, photoURL } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }))
-      } else {
-        dispatch(removeUser())
-      }
-    });
-  }, [])
   return (
     <>
 

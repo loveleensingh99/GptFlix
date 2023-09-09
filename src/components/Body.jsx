@@ -8,10 +8,6 @@ import { addUser, removeUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function Body() {
-  
-
-
-
 
     return (
         <>
