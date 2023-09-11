@@ -17,7 +17,7 @@ export const useNowPlayingMovies = () => {
         };
         const data = await axios.get("https://api.themoviedb.org/3/movie/now_playing?page=1", options)
         console.log(data.data);
-        dispatch(addNowPlayingMovies(data.data));
+        dispatch(addNowPlayingMovies(data.data.results));
     }
 
     useEffect(() => {
