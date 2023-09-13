@@ -8,3 +8,6 @@ export const ApiOptions = {
 
 
 export const IMG_CDN = "https://image.tmdb.org/t/p/w300/"
+
+export const ImgBg = "./assets/homebg.jpg"
+ 

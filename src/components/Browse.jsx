@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Header from './Header'
 import axios from 'axios'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNowPlayingMovies } from '../utils/movieSlice';
 import { useNowPlayingMovies } from '../hooks/useNowPlayingMovies';
 import MainContainer from './MainContainer';
@@ -9,9 +9,10 @@ import SecondaryContainer from './SecondaryContainer';
 import usePopularMovies from '../hooks/usePopularMovies';
 import useTopRatedMovies from '../hooks/useTopRatedMovies';
 import useUpcomingMovies from '../hooks/useUpcomingMovies';
+import GptSearchComponent from './GptSearchComponent';
 
 export default function Browse() {
-
+    const showGptSearch = useSelector(store => store.gpt.showGptSearch)
     useNowPlayingMovies()
     usePopularMovies()
     useTopRatedMovies();
@@ -19,9 +20,12 @@ export default function Browse() {
     return (
         <>
             <Header />
-            <MainContainer />
-            <SecondaryContainer />
-
+            {showGptSearch ? < GptSearchComponent />
+                : <>
+                    <MainContainer />
+                    <SecondaryContainer />
+                </>
+            }
         </>
     )
 }
