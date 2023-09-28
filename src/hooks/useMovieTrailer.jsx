@@ -8,6 +8,8 @@ import { ApiOptions } from '../utils/constants';
 export default function useMovieTrailer(movieId) {
     const dispatch = useDispatch();
     //fetching trailer video and updating the store with trailer video data
+    const trailerVideo = useSelector(store => store.movies.trailerVideo);
+
 
     const fetchMovie = async () => {
 
@@ -20,7 +22,8 @@ export default function useMovieTrailer(movieId) {
     }
 
     useEffect(() => {
-        fetchMovie()
+        if (!trailerVideo)
+            fetchMovie()
     }, [])
 
 }

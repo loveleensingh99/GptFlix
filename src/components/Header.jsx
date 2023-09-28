@@ -49,7 +49,7 @@ export default function Header() {
   const handleGptSearchClick = () => {
     //Toggle GPT Search
     dispatch(toggleGptSearchView())
-     
+
   }
 
   return (

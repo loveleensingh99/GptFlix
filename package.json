@@ -11,6 +11,7 @@
     "firebase": "^10.3.1",
     "js-abbreviation-number": "^1.4.0",
     "moment": "^2.29.4",
+    "openai": "^4.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",

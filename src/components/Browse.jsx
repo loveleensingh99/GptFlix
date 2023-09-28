@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +12,13 @@ import useUpcomingMovies from '../hooks/useUpcomingMovies';
 import GptSearchComponent from './GptSearchComponent';
 
 export default function Browse() {
+
     const showGptSearch = useSelector(store => store.gpt.showGptSearch)
     useNowPlayingMovies()
     usePopularMovies()
     useTopRatedMovies();
     useUpcomingMovies()
+
     return (
         <>
             <Header />

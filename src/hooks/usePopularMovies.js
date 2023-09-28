@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPopularMovies } from '../utils/movieSlice';
 
 const usePopularMovies = () => {
 
 
     const dispatch = useDispatch();
+
+    const popularMovies = useSelector(store => store.movies.popularMovies);
+
     //Fetch data from TMDB Api and update the store 
     const getPopularMovies = async () => {
         const options = {
@@ -22,7 +25,8 @@ const usePopularMovies = () => {
     }
 
     useEffect(() => {
-        getPopularMovies();
+        if (!popularMovies)
+            getPopularMovies();
     }, [])
 }
 

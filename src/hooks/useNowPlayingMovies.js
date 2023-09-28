@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNowPlayingMovies } from '../utils/movieSlice';
 
 export const useNowPlayingMovies = () => {
 
     const dispatch = useDispatch();
+    const nowPlayingMovies = useSelector(store => store.movies.nowPlayingMovies);
+
+
     //Fetch data from TMDB Api and update the store 
     const getNowPlayingMovies = async () => {
         const options = {
@@ -21,7 +24,9 @@ export const useNowPlayingMovies = () => {
     }
 
     useEffect(() => {
-        getNowPlayingMovies()
+        if (!nowPlayingMovies) {
+            getNowPlayingMovies()
+        }
     }, [])
 
 }
