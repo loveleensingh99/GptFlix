@@ -58,7 +58,9 @@ export default function Header() {
         <Link to="/browse" className='z-20'> <img src="./assets/gptflix.png" alt="GptFlix" className="py-2 mx-auto w-44 md:mx-0" /></Link>
         {user &&
           <div className="z-10 flex items-center gap-3 mx-auto md:mx-0">
-            <button className='p-2 mx-2 my-4 text-white bg-purple-800 rounded-md' onClick={handleGptSearchClick}>GPT Search {BiSearchAlt2}</button>
+            <button className='flex items-center justify-center gap-3 p-2 px-2 mx-2 my-4 text-white bg-gray-800 rounded-md bg-opacity-80 ' onClick={handleGptSearchClick}>GPT Search  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg></button>
             <img src="./assets/user.png" alt="logo" className="h-12 bg-white rounded-full" />
             <p className='text-xl text-white'>{user?.displayName}</p>
             <button className='p-2 mx-2 my-4 text-white bg-red-600 rounded-md ' onClick={handleSignOut}>Logout</button>
