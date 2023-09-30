@@ -6,7 +6,7 @@ const MoviesList = ({ title, movies }) => {
     return (
         <>
             <div className="flex flex-col ">
-                <h1 className='px-5 py-3 text-3xl font-bold text-white'>{title}</h1>
+                <h1 className='px-5 py-3 text-xl font-bold text-white md:text-3xl'>{title}</h1>
                 <div className="flex overflow-x-scroll custom-scrollbar">
                     <div className="flex gap-3 px-5">
                         {movies && movies.map((item) => (

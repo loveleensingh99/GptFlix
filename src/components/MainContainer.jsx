@@ -17,7 +17,7 @@ const MainContainer = () => {
 
     return (
         <>
-            <div className="md:pt-0 pt-[30%] bg-black">
+            <div className="md:pt-0 pt-[50%] bg-black">
                 <VideoTitle original_title={original_title} overview={overview} trailerVideo={trailerVideo} tmdbId={id} />
                 <VideoBg movieId={mainMovie.id} />
             </div>

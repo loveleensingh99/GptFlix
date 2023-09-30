@@ -23,7 +23,7 @@ const GptMovieSuggestions = () => {
         <div className="flex flex-col ">
           <div className="flex overflow-x-scroll custom-scrollbar">
             {moviesResults && movieNames && movieNames.map((movieName, index) => (
-              <MovieSuggestionsList title={movieName} movies={moviesResults[index]} key={movieName} />
+              <MovieSuggestionsList title={movieName} movies={moviesResults[index]} />
             ))}
 
           </div>
