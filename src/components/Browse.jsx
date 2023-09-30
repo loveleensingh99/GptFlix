@@ -10,6 +10,8 @@ import usePopularMovies from '../hooks/usePopularMovies';
 import useTopRatedMovies from '../hooks/useTopRatedMovies';
 import useUpcomingMovies from '../hooks/useUpcomingMovies';
 import GptSearchComponent from './GptSearchComponent';
+import {Footer} from './Footer';
+ 
 
 export default function Browse() {
 
@@ -26,6 +28,7 @@ export default function Browse() {
                 : <>
                     <MainContainer />
                     <SecondaryContainer />
+                    <Footer />
                 </>
             }
         </>

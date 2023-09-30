@@ -92,8 +92,8 @@ const Login = () => {
             <div className="">
                 <Header />
                 <div className="relative flex items-center justify-center">
-                    <img src="./assets/homebg.jpg" alt="homebg" className='top-0 left-0 -z-10' />
-                    <div className="absolute w-[450px] ">
+                    <img src="./assets/homebg.jpg" alt="homebg" className='top-0 left-0 object-cover w-full h-screen -z-10 md:h-auto' />
+                    <div className="absolute md:w-[450px] w-full px-4 md:px-0">
                         <ToastContainer
                             position='top-right'
                             autoClose={5000}
@@ -112,7 +112,7 @@ const Login = () => {
                                 <input ref={emailLogin} type="text" placeholder='Email Address' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <input ref={passwordLogin} type="password" placeholder='Password' className='p-2 m-2 placeholder-gray-700 bg-gray-300' />
                                 <button className='p-4 mx-2 my-4 text-white bg-red-600 rounded-md ' onClick={handleSignIn}>Sign In</button>
-                                <p className='w-auto py-4 mx-2 text-white cursor-pointer group' onClick={toggleSignInForm}>New to Netflix? <span className='group-hover:underline'> Sign Up Now</span></p>
+                                <p className='w-auto py-4 mx-2 text-white cursor-pointer group' onClick={toggleSignInForm}>New to GptFlix? <span className='group-hover:underline'> Sign Up Now</span></p>
                             </form>}
                         {!isSignInForm &&
                             <form className='flex flex-col p-12 bg-black rounded-md bg-opacity-80'>

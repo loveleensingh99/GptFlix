@@ -61,13 +61,14 @@ const GptSearchBar = () => {
         searchText.current.addEventListener('keypress', handleKeyPress);
 
         // Cleanup the event listener when the component unmounts
-       
+
 
     }, [])
 
 
     //search movie in tmdb 
     const searchMovieTmdb = async (movieName) => {
+
         const data = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`, ApiOptions)
         return data.data;
     }
@@ -78,12 +79,12 @@ const GptSearchBar = () => {
     return (
         <>
             <div className="absolute -z-10">
-                <img src={ImgBg} alt="homebg" className='top-0 left-0 -z-10' />
+                <img src={ImgBg} alt="homebg" className='fixed top-0 left-0 object-cover h-screen md:object-none xl:h-auto -z-10' />
             </div>
-            <div className=" pt-[15%] flex justify-center z-50">
-                <form className='grid items-center w-1/2 grid-cols-12 gap-3 m-6 bg-black rounded-xl' onSubmit={(e) => e.preventDefault()}>
-                    <input ref={searchText} type="text" className='col-span-9 p-4 my-4 ml-3 rounded-lg' placeholder='What would to watch today?' ></input>
-                    <button className='col-span-3 px-4 py-4 mr-3 text-white bg-red-700 rounded-lg' onClick={handleGptSearchClick}>Search</button>
+            <div className="pt-[50%] md:pt-[10%] flex justify-center z-50">
+                <form className='grid items-center w-full grid-cols-12 gap-3 m-2 bg-black rounded-md md:m-6 md:w-1/2 md:rounded-xl' onSubmit={(e) => e.preventDefault()}>
+                    <input ref={searchText} type="text" className='col-span-9 p-2 my-4 ml-3 rounded-sm md:rounded-lg md:p-4' placeholder='Your favourite movie, actor, or type of movie' ></input>
+                    <button className='col-span-3 p-2 mr-3 text-white bg-red-700 rounded-sm md:rounded-lg md:px-4 md:py-4' onClick={handleGptSearchClick}>Search</button>
                 </form> {loading && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                         <img src="./assets/loading.gif" alt="Loading..." />
